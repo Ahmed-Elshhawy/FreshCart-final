@@ -12,7 +12,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export function DropdownMenuBasic({ logout }) {
+// حددنا نوع Props
+interface DropdownMenuBasicProps {
+  logout: () => void; // logout دالة بدون مدخلات ومخرجات
+}
+
+export function DropdownMenuBasic({ logout }: DropdownMenuBasicProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="flex flex-col items-center">
