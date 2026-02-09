@@ -36,26 +36,21 @@ export default function Register() {
   // }
   async function SubmitForm(values: zod.infer<typeof Schema>) {
     try {
-      const res = await fetch(
-        "https://ecommerce.routemisr.com/api/v1/auth/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API}auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(values),
+      });
 
       const data = await res.json();
 
       if (res.ok) {
-        // حفظ الإيميل
         localStorage.setItem("userEmail", values.email);
 
         alert("Register Success");
 
-        // ✅ تحويل إلى صفحة اللوجين
         router.push("/login");
       } else {
         alert(data.message || "Register Failed");
