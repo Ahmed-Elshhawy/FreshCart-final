@@ -14,13 +14,11 @@ export default function VerifyCode() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email"); // جاي من ForgetPassword
+  const email = searchParams.get("email");
 
-  // تملى الايميل تلقائي لو موجود في localStorage
   useEffect(() => {
     const savedEmail = localStorage.getItem("userEmail");
     if (savedEmail && !email) {
-      // مش ممكن تعدل searchParams مباشرة، استخدم router.replace
       router.replace(`/verify-code?email=${savedEmail}`);
     }
   }, [email, router]);

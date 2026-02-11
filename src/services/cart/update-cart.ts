@@ -15,7 +15,7 @@ export async function updateCartItem({
     throw new Error("unauthorized........");
   }
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API}cart/${productId}`,
+    `https://ecommerce.routemisr.com/api/v2/cart/${productId}`,
     {
       method: "PUT",
       headers: {

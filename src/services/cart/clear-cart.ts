@@ -6,7 +6,7 @@ export async function clearCart() {
   if (!token) {
     throw new Error("unauthorized........");
   }
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API}cart`, {
+  const response = await fetch("https://ecommerce.routemisr.com/api/v2/cart", {
     method: "DELETE",
     headers: {
       token: token,

@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import cartImg from "../../assets/images/cart.png";
-import { removeFromWishlist } from "@/services/wishlist/removeFromWishlist"; // <<==== server action
+import { addToWishlist } from "@/services/wishlist/addToWishlist";
+import { removeFromWishlist } from "@/services/wishlist/removeFromWishlist";
 
 interface Product {
   _id: string;
@@ -46,7 +47,21 @@ export default function WishlistPage() {
     enabled: !!token,
   });
 
-  // Remove from wishlist using server action
+  // Add to wishlist
+  const addMutation = useMutation({
+    mutationFn: async (productId: string) => {
+      return await addToWishlist(productId);
+    },
+    onSuccess: () => {
+      toast.success("Product added to wishlist");
+      queryClient.invalidateQueries({ queryKey: ["get-wishlist"] });
+    },
+    onError: (err: any) => {
+      toast.error(err.message || "Failed to add product");
+    },
+  });
+
+  // Remove from wishlist
   const removeMutation = useMutation({
     mutationFn: async (productId: string) => {
       return await removeFromWishlist(productId);
@@ -54,7 +69,7 @@ export default function WishlistPage() {
     onSuccess: (_data, productId) => {
       toast.success("Removed from wishlist");
 
-      // Update table immediately without refetching
+      // Update UI immediately without refetching
       queryClient.setQueryData<WishlistAPIResponse>(["get-wishlist"], (old) => {
         if (!old) return { status: "success", message: "", data: [] };
         return {
@@ -79,7 +94,7 @@ export default function WishlistPage() {
     );
 
   return (
-    <div className="p-4  ">
+    <div className="p-4 text-center">
       <table className="w-full border">
         <thead>
           <tr>
@@ -93,7 +108,7 @@ export default function WishlistPage() {
           {data.data.map((prod) => (
             <tr key={prod._id}>
               <td className="p-2 border">
-                <img src={prod.imageCover} className="w-16" />
+                <img src={prod.imageCover} className="w-16 h-auto mx-auto" />
               </td>
               <td className="p-2 border">{prod.title}</td>
               <td className="p-2 border">{prod.price} EGP</td>

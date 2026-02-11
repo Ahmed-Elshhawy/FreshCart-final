@@ -12,9 +12,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-// حددنا نوع Props
 interface DropdownMenuBasicProps {
-  logout: () => void; // logout دالة بدون مدخلات ومخرجات
+  logout: () => void;
 }
 
 export function DropdownMenuBasic({ logout }: DropdownMenuBasicProps) {

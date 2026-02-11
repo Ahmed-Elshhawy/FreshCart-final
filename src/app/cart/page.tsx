@@ -263,8 +263,8 @@ export default function Cart() {
         <Image
           src={cartImg}
           alt="cart"
-          width={400}
-          height={400}
+          width={300}
+          height={300}
           className="object-cover mt-10 mx-auto"
         />
       )}

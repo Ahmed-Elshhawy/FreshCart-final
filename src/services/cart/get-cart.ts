@@ -11,5 +11,5 @@ export type CartResponseFromAPI = {
 export const getCart = async (): Promise<CartResponseFromAPI> => {
   const res = await fetch("/api/cart");
   const data = await res.json();
-  return data; // يمكن أن تكون data.products موجودة أو لا
+  return data;
 };
