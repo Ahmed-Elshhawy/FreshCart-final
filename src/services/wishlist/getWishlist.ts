@@ -18,16 +18,26 @@
 // //   console.log(payload);
 // //   return payload;
 // // }
-// // .............
+
+// ...............
 // "use server";
 // import { getAccessToken } from "@/schema/access-token";
 
-// export async function getWishlist() {
+// export interface WishlistItem {
+//   _id: string;
+//   title: string;
+// }
+
+// export interface WishlistResponse {
+//   products: WishlistItem[];
+// }
+
+// export async function getWishlist(): Promise<WishlistResponse> {
 //   const token = await getAccessToken();
 
 //   if (!token) {
 //     console.warn("No token, user not logged in");
-//     return null;
+//     return { products: [] };
 //   }
 
 //   const response = await fetch(`${process.env.NEXT_PUBLIC_API}wishlist`, {
@@ -41,16 +51,19 @@
 
 //   if (!response.ok) {
 //     console.error("Wishlist fetch failed:", response.status);
-//     return null;
+//     return { products: [] };
 //   }
 
 //   const payload = await response.json();
-//   console.log("Wishlist Payload:", payload);
-//   return payload;
+
+//   return { products: payload.products || [] };
 // }
-// ...............
+
+// .............
 "use server";
-import { getAccessToken } from "@/schema/access-token";
+
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
 export interface WishlistItem {
   _id: string;
@@ -62,7 +75,8 @@ export interface WishlistResponse {
 }
 
 export async function getWishlist(): Promise<WishlistResponse> {
-  const token = await getAccessToken();
+  const session = await getServerSession(authOptions);
+  const token = session?.token;
 
   if (!token) {
     console.warn("No token, user not logged in");

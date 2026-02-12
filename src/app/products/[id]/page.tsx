@@ -27,8 +27,8 @@ export default async function ProductDetails(props: myProps) {
   console.log(id);
 
   let response = await fetch(
-    `${process.env.NEXT_PUBLIC_API}products/${id}`,
-    // `https://ecommerce.routemisr.com/api/v1/products/${id}`,
+    // `${process.env.NEXT_PUBLIC_API}products/${id}`,
+    `https://ecommerce.routemisr.com/api/v1/products/${id}`,
     {
       method: "GET",
       cache: "no-store",

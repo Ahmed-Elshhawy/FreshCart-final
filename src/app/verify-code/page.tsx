@@ -42,7 +42,6 @@ export default function VerifyCode() {
     setIsLoading(true);
 
     try {
-      // 1️⃣ Verify code
       const verifyRes = await fetch(
         "https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode",
         {
@@ -58,7 +57,6 @@ export default function VerifyCode() {
         return;
       }
 
-      // 2️⃣ Reset password
       const resetRes = await fetch(
         "https://ecommerce.routemisr.com/api/v1/auth/resetPassword",
         {
