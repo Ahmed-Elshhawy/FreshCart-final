@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/schema/loginSchema";
 import * as zod from "zod";
 
-// استيراد toast
 import { Toaster, toast } from "react-hot-toast";
 
 export default function Login() {
@@ -50,11 +49,13 @@ export default function Login() {
       });
 
       if (response?.ok) {
-        // toast نجاح مثل cart
-        toast.success("Login successful!");
-        setTimeout(() => router.replace(response.url || "/"), 1000);
+        toast.success("Login successful!", {
+          duration: 2000,
+        });
+
+        setTimeout(() => router.replace(response.url || "/"), 2000);
       } else {
-        setErrorMessage(" Wrong email or password");
+        setErrorMessage("Wrong email or password");
       }
     } catch (err) {
       setErrorMessage("Unexpected error, try again.");
